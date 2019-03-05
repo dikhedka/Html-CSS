@@ -1,0 +1,185 @@
+                                                 SQL Queries                              
+
+1) Write a query for the HR department to produce the addresses of all the departments.
+    Use the LOCATIONS and COUNTRIES tables. Show the location ID, street address,
+    city, state or province, and country in the output. Run the query
+-->      select * from locations;
+
+    
+2) The HR department needs a report of employees in Toronto. Display the last name, job,   
+    department number, and department name for all employees who work in Toronto.
+-->    select last_name,job_id,d.department_id,department_name
+    -> from employees e
+    -> join department d
+    -> on e.department_id=d.department_id
+    -> join locations l
+    -> on l.location_name=d.locations
+    -> where l.city="toronto";
+
+    
+
+3) Create a report for HR that displays the last name and salary of every employee who reports to   
+    King.
+  -->  select last_name,salary from employees where manager_id=(select employee_id from employees where last_name="king");
+      
+
+
+4) Create Table MY_EMPLOYEE. Description is shown below:
+   
+ -->    create table MY_EMPLOYEE(ID int NOT NULL,FIRST_NAME varchar(25),LAST_NAME varchar(25),USERID varchar(8),SALARY int);
+
+5) Add the following data to the MY_EMPLOYEE table 
+-->   insert into my_employee values(1,'Ralph','patel','rpatel',895),
+      (2,'Betty','dancs','bdancs',860),
+      (3,'Ben','berry','bbiri',1100),
+      (4,'Chad','newman','cnewman',750),
+      (5,'Audrey','ropeburn','aropebur',1550);
+    
+ 
+      	
+6) Change the last name of employee 3 to Drexler.
+-->  update MY_EMPLOYEE set LAST_NAME='dexler' where id=3;
+
+7) Change the salary to $1,000 for all employees who have a salary less than $900.
+-->   update MY_EMPLOYEE set salary=1000 where salary<900;
+ 
+8) Delete Betty Dancs from the MY_EMPLOYEE table.
+-->   delete from MY_EMPLOYEE where FIRST_NAME='Betty' and LAST_NAME='dancs';
+
+9) Mark an intermediate point in the processing of the transaction.
+-->   savepoint A;
+
+10) Delete all the rows from the MY_EMPLOYEE table.  Confirm that the table is empty.
+-->  delete from MY_EMPLOYEE;
+
+11) Discard the most recent DELETE operation.
+-->   rollback to A;
+
+12) Make the data addition permanent.
+-->  commit;
+
+13) The staff in the HR department wants to hide some of the data in the EMPLOYEES table. Create 
+      a view called EMPLOYEES_VU based on the employee numbers, employee last names, and 
+     department numbers from the EMPLOYEES table. The heading for the employee name should be  
+     EMPLOYEE.
+
+     Confirm that the view works. Display the contents of the EMPLOYEES_VU view
+
+-->    create view EMPLOYEES_VU as select employee_id,last_name employee,department_id from employees;
+-->     select *from employees_vu;
+
+
+          +-------------+-------------+---------------+
+| employee_id | employee    | department_id |
++-------------+-------------+---------------+
+|         100 | King        |            90 |
+|         101 | Kochhar     |            90 |
+|         102 | De Haan     |            90 |
+|         103 | Hunold      |            60 |
+|         104 | Ernst       |            60 |
+|         105 | Austin      |            60 |
+|         106 | Pataballa   |            60 |
+|         107 | Lorentz     |            60 |
+|         108 | Greenberg   |           100 |
+|         109 | Faviet      |           100 |
+|         110 | Chen        |           100 |
+|         111 | Sciarra     |           100 |
+|         112 | Urman       |           100 |
+|         113 | Popp        |           100 |
+|         114 | Raphaely    |            30 |
+|         115 | Khoo        |            30 |
+|         116 | Baida       |            30 |
+|         117 | Tobias      |            30 |
+|         118 | Himuro      |            30 |
+|         119 | Colmenares  |            30 |
+|         120 | Weiss       |            50 |
+|         121 | Fripp       |            50 |
+|         122 | Kaufling    |            50 |
+|         123 | Vollman     |            50 |
+|         124 | Mourgos     |            50 |
+|         125 | Nayer       |            50 |
+|         126 | Mikkilineni |            50 |
+|         127 | Landry      |            50 |
+|         128 | Markle      |            50 |
+|         129 | Bissot      |            50 |
+|         130 | Atkinson    |            50 |
+|         131 | Marlow      |            50 |
+|         132 | Olson       |            50 |
+|         133 | Mallin      |            50 |
+|         134 | Rogers      |            50 |
+|         135 | Gee         |            50 |
+|         136 | Philtanker  |            50 |
+|         137 | Ladwig      |            50 |
+|         138 | Stiles      |            50 |
+|         139 | Seo         |            50 |
+|         140 | Patel       |            50 |
+|         141 | Rajs        |            50 |
+|         142 | Davies      |            50 |
+|         143 | Matos       |            50 |
+|         144 | Vargas      |            50 |
+|         145 | Russell     |            80 |
+|         146 | Partners    |            80 |
+|         147 | Errazuriz   |            80 |
+|         148 | Cambrault   |            80 |
+|         149 | Zlotkey     |            80 |
+|         150 | Tucker      |            80 |
+|         151 | Bernstein   |            80 |
+|         152 | Hall        |            80 |
+|         153 | Olsen       |            80 |
+|         154 | Cambrault   |            80 |
+|         155 | Tuvault     |            80 |
+|         156 | King        |            80 |
+|         157 | Sully       |            80 |
+|         158 | McEwen      |            80 |
+|         159 | Smith       |            80 |
+|         160 | Doran       |            80 |
+|         161 | Sewall      |            80 |
+|         162 | Vishney     |            80 |
+|         163 | Greene      |            80 |
+|         164 | Marvins     |            80 |
+|         165 | Lee         |            80 |
+|         166 | Ande        |            80 |
+|         167 | Banda       |            80 |
+|         168 | Ozer        |            80 |
+|         169 | Bloom       |            80 |
+|         170 | Fox         |            80 |
+|         171 | Smith       |            80 |
+|         172 | Bates       |            80 |
+|         173 | Kumar       |            80 |
+|         174 | Abel        |            80 |
+|         175 | Hutton      |            80 |
+|         176 | Taylor      |            80 |
+|         177 | Livingston  |            80 |
+|         178 | Grant       |          NULL |
+|         179 | Johnson     |            80 |
+|         180 | Taylor      |            50 |
+|         181 | Fleaur      |            50 |
+|         182 | Sullivan    |            50 |
+|         183 | Geoni       |            50 |
+|         184 | Sarchand    |            50 |
+|         185 | Bull        |            50 |
+|         186 | Dellinger   |            50 |
+|         187 | Cabrio      |            50 |
+|         188 | Chung       |            50 |
+|         189 | Dilly       |            50 |
+|         190 | Gates       |            50 |
+|         191 | Perkins     |            50 |
+|         192 | Bell        |            50 |
+|         193 | Everett     |            50 |
+|         194 | McCain      |            50 |
+|         195 | Jones       |            50 |
+|         196 | Walsh       |            50 |
+|         197 | Feeney      |            50 |
+|         198 | OConnell    |            50 |
+|         199 | Grant       |            50 |
+|         200 | Whalen      |            10 |
+|         201 | Hartstein   |            20 |
+|         202 | Fay         |            20 |
+|         203 | Mavris      |            40 |
+|         204 | Baer        |            70 |
+|         205 | Higgins     |           110 |
+|         206 | Gietz       |           110 |
++-------------+-------------+---------------+
+107 rows in set (0.00 sec)
+
+        
